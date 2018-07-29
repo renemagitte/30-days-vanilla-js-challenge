@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+</head>
+<body>
+<script>
+    
+    const pressed = [];
+    const secretCode = 'öppenbok4ever';
+    
+    window.addEventListener('keyup', (e) => {
+        console.log(e.key);
+        pressed.push(e.key);
+        /* The latest pressed 6 characters (secretCode.length) is kept in the array, and the earlier are spliced out: */
+        pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+        
+        if(pressed.join('').includes(secretCode)){
+            console.log('JACKPOT!');
+            /* Something can happen here, e.g.: */
+            cornify_add();
+        }
+    });
+</script>
+</body>
+</html>
