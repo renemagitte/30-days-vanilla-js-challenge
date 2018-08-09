@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Understanding JavaScript's Capture</title>
+</head>
+<body class="bod">
+
+  <div class="one">
+    <div class="two">
+      <div class="three">
+      </div>
+    </div>
+  </div>
+
+<style>
+  html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after { box-sizing: inherit; }
+
+  div {
+    width:100%;
+    padding:100px;
+  }
+
+  .one {
+    background: thistle;
+  }
+
+  .two {
+    background:mistyrose;
+  }
+
+  .three {
+    background:coral;
+  }
+</style>
+
+<button></button>
+
+<script>
+
+    const divs = document.querySelectorAll('div');
+    const button = document.querySelector('button');
+    
+    function logText(e){
+        console.log(this.classList.value);
+        
+        /* Stop bubbling! */
+        e.stopPropagation();
+    }
+    
+    /* This eventListener will "BUBBLE UP" and trigger events on parent divs (= also one and two, if you only click on div three!):
+    divs.forEach(div => div.addEventListener('click', logText)); */
+    
+    divs.forEach(div => div.addEventListener('click', logText, { 
+        /* boolean decided ascending or descending order. (one, two, three OR three, two, one). "bubble up/down"....
+        false = default. true together with stopPropagation() --> only top parent will be triggered. */ 
+        capture: false,
+        /* If once: true = Removes/"unbinds" eventlistener when it's been clicked once! One time only, folks! */
+        once: false
+    }));
+    
+    button.innerText = "Click here!!!"
+    button.style.width = '200px';
+    button.style.height = '80px';
+    button.style.fontSize = '20px';
+    
+    /* A button that can only be clicked once. Good to use for store check-outs buttons! */
+    button.addEventListener('click', () => {
+        console.log("Click!!!");
+    }, {
+        once: true
+    });
+    
+</script>
+</body>
+</html>
