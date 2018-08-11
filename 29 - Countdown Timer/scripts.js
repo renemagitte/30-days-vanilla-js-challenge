@@ -10,7 +10,6 @@ function timer(seconds){
     
     const now = Date.now();
     const then = now + (seconds * 1000); /* seconds to ms */
-    console.log({now, then});
     
     displayTimeLeft(seconds); /* Display seconds, right from the start! */
     displayEndTime(then);
@@ -62,6 +61,7 @@ function startTimer(){
 }
 
 buttons.forEach(button => button.addEventListener('click', startTimer));
+
 /* In DOM: form name = "cosumForm", we can add eventlistener directly: */
 document.customForm.addEventListener('submit', function(e){
     e.preventDefault(); /* Stop from submiting (update page)! */
@@ -69,6 +69,5 @@ document.customForm.addEventListener('submit', function(e){
     const mins = this.minutes.value;
     timer(mins * 60); /* passing seconds into timer() */
     this.reset(); /* CLEARING THE INPUT WITH .RESET()!!!! */
-    
 });
     
